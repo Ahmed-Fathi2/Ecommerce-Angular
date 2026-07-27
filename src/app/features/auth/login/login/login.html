@@ -1,0 +1,68 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>Login to your account</h2>
+      <p>Access your orders, track shipments, and manage your profile.</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      @if (serverErrorMessages().length) {
+      <div class="rounded-lg border border-red-200 bg-red-50 px-3 py-2">
+        @for (message of serverErrorMessages(); track message) {
+        <p class="text-sm text-red-600">{{ message }}</p>
+        }
+      </div>
+      }
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-slate-700">Email</label>
+        <input formControlName="Email" type="email" placeholder="you@example.com"
+          class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+
+        @if(loginForm.get('Email')?.errors && loginForm.get('Email')?.touched)
+        {
+        @if(loginForm.get('Email')?.errors?.['required'] )
+        {
+        <p class="text-sm text-red-600">Email is required.</p>
+        }
+        @else {
+        <p class="text-sm text-red-600">Please enter a valid email address.</p>
+        }
+        }
+
+      </div>
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-slate-700">Password</label>
+        <input formControlName="Password" type="password" placeholder="Enter password"
+          class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+        @if(loginForm.get('Password')?.errors && loginForm.get('Password')?.touched)
+        {
+        @if(loginForm.get('Password')?.errors?.['required'] )
+        {
+        <p class="text-sm text-red-600">Password is required.</p>
+        }
+        }
+      </div>
+
+
+      <button type="submit"
+        class="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
+        [disabled]="isLoading()">
+        @if (isLoading()) {
+        <span class="flex items-center justify-center gap-2">
+          <svg class="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.001 8.001 0 0112 4.472V0C5.373 0 0 5.373 0 12h4c0-2.095.84-4.005 2.2-5.437l1.8 1.728z">
+            </path>
+          </svg>
+          <span>Loading...</span>
+        </span>
+        } @else {
+        <span>Login</span>
+        }
+      </button>
+    </form>
+  </div>
+</div>
