@@ -1,0 +1,54 @@
+ :host {
+   display: block;
+ }
+
+ footer {
+   background-color: #0f172a;
+   color: #cbd5e1;
+   font-family: Inter, system-ui, sans-serif;
+ }
+
+ footer a {
+   color: #94a3b8;
+   text-decoration: none;
+ }
+
+ footer a:hover {
+   color: #ffffff;
+ }
+
+ .footer-subscribe input {
+   width: 100%;
+   border-radius: 0.75rem;
+   border: 1px solid #334155;
+   background: #111827;
+   color: #e2e8f0;
+ }
+
+ .footer-subscribe input:focus {
+   border-color: #2563eb;
+   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.14);
+   outline: none;
+ }
+
+ .footer-subscribe button {
+   border-radius: 0.75rem;
+   border: none;
+ }
+:host {
+  display: block;
+}
+
+footer {
+  background-color: #0f172a;
+  color: #cbd5e1;
+}
+
+footer a {
+  color: #94a3b8;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #ffffff;
+}
