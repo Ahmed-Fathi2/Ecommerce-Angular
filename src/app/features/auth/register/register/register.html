@@ -1,0 +1,132 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-header">
+      <h2>Create your account</h2>
+      <p>Sign up and get ready for faster checkout and exclusive deals.</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
+      @if (serverErrorMessages().length) {
+      <div class="rounded-lg border border-red-200 bg-red-50 px-3 py-2">
+        @for (message of serverErrorMessages(); track message) {
+        <p class="text-sm text-red-600">{{ message }}</p>
+        }
+      </div>
+      }
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label class="mb-1 block text-sm font-medium text-slate-700">First Name</label>
+          <input formControlName="FirstName" type="text" placeholder="First name"
+            class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+
+          @if(registerForm.get('FirstName')?.errors && registerForm.get('FirstName')?.touched)
+          {
+          @if(registerForm.get('FirstName')?.errors?.['required'] )
+          {
+          <p class="text-sm text-red-600">First name is required.</p>
+          }
+
+          @else {
+          <p class="text-sm text-red-600">First name must be between 3 and 20 characters.</p>
+          }
+          }
+        </div>
+
+        <div>
+          <label class="mb-1 block text-sm font-medium text-slate-700">Last Name</label>
+          <input formControlName="LastName" type="text" placeholder="Last name"
+            class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+
+          @if(registerForm.get('LastName')?.errors && registerForm.get('LastName')?.touched)
+          {
+          @if(registerForm.get('LastName')?.errors?.['required'] )
+          {
+          <p class="text-sm text-red-600">Last name is required.</p>
+          }
+          @else {
+          <p class="text-sm text-red-600">Last name must be between 3 and 20 characters.</p>
+          }
+          }
+
+
+
+        </div>
+      </div>
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-slate-700">Email</label>
+        <input formControlName="Email" type="email" placeholder="you@example.com"
+          class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+
+        @if(registerForm.get('Email')?.errors && registerForm.get('Email')?.touched)
+        {
+        @if(registerForm.get('Email')?.errors?.['required'] )
+        {
+        <p class="text-sm text-red-600">Email is required.</p>
+        }
+        @else {
+        <p class="text-sm text-red-600">Please enter a valid email address.</p>
+        }
+        }
+      </div>
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-slate-700">Password</label>
+        <input formControlName="Password" type="password" placeholder="Enter password"
+          class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+        @if(registerForm.get('Password')?.errors && registerForm.get('Password')?.touched)
+        {
+        @if(registerForm.get('Password')?.errors?.['required'] )
+        {
+        <p class="text-sm text-red-600">Password is required.</p>
+        }
+        @else {
+        <p class="text-sm text-red-600">Password must contain at least 8 characters, including uppercase, lowercase,
+          number, and special character..</p>
+        }
+        }
+      </div>
+
+      <div>
+        <label class="mb-1 block text-sm font-medium text-slate-700">Confirm Password</label>
+        <input formControlName="ConfirmPassword" type="password" placeholder="Confirm password"
+          class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+
+        @if(registerForm.get('ConfirmPassword')?.errors && registerForm.get('ConfirmPassword')?.touched)
+        {
+        @if(registerForm.get('ConfirmPassword')?.errors?.['required'] )
+        {
+        <p class="text-sm text-red-600">Confirm password is required.</p>
+        }
+
+
+        }
+        @if(registerForm?.errors?.['passwordMismatch'] && registerForm.get('ConfirmPassword')?.touched &&
+        registerForm.get('Password')?.touched)
+        {
+        <p class="text-sm text-red-600">Passwords do not match.</p>
+        }
+
+      </div>
+
+      <button type="submit"
+        class="w-full rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70"
+        [disabled]="isLoading()">
+        @if (isLoading()) {
+        <span class="flex items-center justify-center gap-2">
+          <svg class="h-4 w-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A8.001 8.001 0 0112 4.472V0C5.373 0 0 5.373 0 12h4c0-2.095.84-4.005 2.2-5.437l1.8 1.728z">
+            </path>
+          </svg>
+          <span>Loading...</span>
+        </span>
+        } @else {
+        <span>Register</span>
+        }
+      </button>
+    </form>
+  </div>
+</div>
