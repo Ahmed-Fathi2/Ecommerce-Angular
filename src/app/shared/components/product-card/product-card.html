@@ -1,0 +1,20 @@
+<article class="product-card">
+  <div class="product-image">
+    <img
+      [src]="imageSrc"
+      [alt]="product.name || 'Product Image'"
+      (error)="onImageError($event)"
+    />
+  </div>
+
+  <div class="product-card-content">
+    <p class="product-category">{{ product.categoryName }}</p>
+    <h3>{{ product.name }}</h3>
+    <p class="product-description">{{ product.description }}</p>
+
+    <div class="product-meta">
+      <span class="product-price">${{ product.price }}</span>
+      <button type="button" class="product-button">Add to Cart</button>
+    </div>
+  </div>
+</article>
