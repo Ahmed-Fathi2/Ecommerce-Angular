@@ -1,0 +1,61 @@
+<section class="product-slider-section">
+  <div class="slider-header">
+    <div>
+      <p class="slider-label">Hot Deals & Offers</p>
+      <h2>Featured Products</h2>
+    </div>
+    
+  
+    @if (products().length > 0) {
+      <div class="slider-controls">
+        <button 
+          type="button" 
+          class="slider-control" 
+          (click)="prevSlide()" 
+          [disabled]="currentIndex() === 0"
+          aria-label="Previous Slide">
+          &larr;
+        </button>
+        <button 
+          type="button" 
+          class="slider-control" 
+          (click)="nextSlide()" 
+          [disabled]="currentIndex() >= maxIndex()"
+          aria-label="Next Slide">
+          &rarr;
+        </button>
+      </div>
+    }
+  </div>
+
+  @if (errorMessages().length > 0) {
+    <div class="error-state">
+      <div class="error-icon">⚠️</div>
+      <ul class="error-list">
+        @for (msg of errorMessages(); track msg) {
+          <li>{{ msg }}</li>
+        }
+      </ul>
+    </div>
+  }
+
+  @if (isLoading()) {
+    <div class="empty-state">
+      <p>Loading products...</p>
+    </div>
+  } @else if (products().length > 0) {
+    <div class="slider-container">
+      <div class="slider-track" [style.transform]="transformStyle()">
+        @for (product of products(); track product.id) {
+          <div class="slider-item">
+            <app-product-card [product]="product"></app-product-card>
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="empty-state">
+      <p>No products available at the moment.</p>
+    </div>
+  }
+</section>
