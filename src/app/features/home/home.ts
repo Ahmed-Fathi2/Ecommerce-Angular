@@ -1,22 +1,12 @@
 import { Component } from '@angular/core';
+import { ProductSlider } from '../product-slider/product-slider';
+import { Hero } from '../hero/hero/hero';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [Hero, ProductSlider],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home {
+export class Home {}
 
-
-
-  counter = 0;
-
-  increment() {
-    this.counter++;
-  }
-
-  decrement() {
-    this.counter--;
-  }
-}
