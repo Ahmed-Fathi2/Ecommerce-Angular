@@ -13,6 +13,7 @@
   height: 220px;
   object-fit: cover;
   display: block;
+  cursor: pointer;
 }
 
 .product-card-content {
@@ -21,6 +22,9 @@
   flex-direction: column;
   gap: 0.6rem;
   flex: 1;
+}
+.producr-details{
+   cursor: pointer;
 }
 
 .product-category {

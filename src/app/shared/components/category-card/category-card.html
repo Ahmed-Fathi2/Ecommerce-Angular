@@ -1,0 +1,16 @@
+<div class="category-card" >
+  <div class="category-image">
+    <img
+      [src]="imageSrc"
+      [alt]="category.name || 'Category Image'"
+      (error)="onImageError($event)"
+    />
+    <div class="category-overlay"></div>
+  </div>
+  <div class="category-card-content">
+    <h3>{{ category.name }}</h3>
+    @if (category.description) {
+      <p class="category-description">{{ category.description }}</p>
+    }
+  </div>
+</div>

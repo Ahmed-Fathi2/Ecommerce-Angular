@@ -22,10 +22,7 @@ export class ProductSlider implements OnInit {
   itemsPerPage = 3;
   pageNumber = 10;
 
-  errorMessages = signal<string []>([]);
-
- 
-
+  errorMessages = signal<string[]>([]);
 
   ngOnInit(): void {
     this.loadProducts();
@@ -34,18 +31,14 @@ export class ProductSlider implements OnInit {
   private loadProducts(): void {
     this.productService.GetAllProductsForSlider(this.pageNumber).subscribe({
       next: (response: any) => {
-        const rawItems = response?.items || response;
-        this.products.set(Array.isArray(rawItems) ? rawItems : []);
+        this.products.set(response.items);
         this.isLoading.set(false);
       },
       error: (error) => {
         console.error('Error fetching products:', error);
-
-
         this.isLoading.set(false);
-
         this.errorMessages.set(this.errorHandlerService.extractServerErrors(error));
-      }
+      },
     });
   }
 
@@ -58,13 +51,13 @@ export class ProductSlider implements OnInit {
 
   nextSlide(): void {
     if (this.currentIndex() < this.maxIndex()) {
-      this.currentIndex.update(val => val + 1);
+      this.currentIndex.update((val) => val + 1);
     }
   }
 
   prevSlide(): void {
     if (this.currentIndex() > 0) {
-      this.currentIndex.update(val => val - 1);
+      this.currentIndex.update((val) => val - 1);
     }
   }
 }

@@ -1,11 +1,3 @@
-export interface ProductsResponse {
-  items: IProduct[];
-  pageNumber: number;
-  totalPages: number;
-  isPrevious: boolean;
-  isNext: boolean;
-}
-
 export interface IProduct {
   id: string;
   name: string;
@@ -15,4 +7,12 @@ export interface IProduct {
   categoryId: string;
   categoryName: string;
   imageUrl: string | null;
+}
+
+export interface ProductsResponse {
+  items: IProduct[];
+  pageNumber: number;
+  totalPages: number;
+  isPrevious: boolean;
+  isNext: boolean;
 }

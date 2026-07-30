@@ -19,7 +19,7 @@ if(isPlatformBrowser(platformId)){
 
       const decodedToken:any = jwtDecode(token) ;
 
-      if(decodedToken.ExpiresIn && decodedToken.ExpiresIn > Date.now() / 1000)
+      if(decodedToken.exp && decodedToken.exp > Date.now() / 1000)
         {
           return true;
 
@@ -44,7 +44,7 @@ if(isPlatformBrowser(platformId)){
 }
 
 
-  return router.createUrlTree(['/login']);
+ return true; 
 };
 
 
