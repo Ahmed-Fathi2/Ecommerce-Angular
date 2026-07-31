@@ -2,6 +2,7 @@ import { Component, inject, Input } from '@angular/core';
 import { IProduct } from '../../../core/models/product/IProduct';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../../core/services/cart/cart-service';
+import { NotificationService } from '../../../core/services/notification/notification-service';
 
 @Component({
   selector: 'app-product-card',
@@ -11,6 +12,7 @@ import { CartService } from '../../../core/services/cart/cart-service';
 })
 export class ProductCard {
   private cartService = inject(CartService);
+  private readonly notification = inject(NotificationService);
 
   @Input() product!: IProduct;
 
@@ -30,10 +32,17 @@ export class ProductCard {
     this.cartService.addToCart(this.product.id).subscribe({
       next: (response) => {
         console.log(response);
-        scrollTo({ top: 0, behavior: 'smooth' });
+        // scrollTo({ top: 0, behavior: 'smooth' });
+
+       
+        this.cartService.cartItemsCount.update((value)=>value+1);
+
+        this.notification.success('Product added successfully');
       },
       error: (error) => {
         console.log(error);
+        // scrollTo({ top: 0, behavior: 'smooth' });
+        this.notification.error('Something went wrong');
       },
     });
   }
