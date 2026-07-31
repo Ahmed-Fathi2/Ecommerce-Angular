@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { inject, Injectable, PLATFORM_ID, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { isPlatformBrowser } from '@angular/common';
+import { ICart } from '../../models/cart/ICart';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,10 @@ export class CartService {
   private readonly baseUrl = `${environment.baseUrl}/api/Cart`;
 
   private readonly platformId = inject(PLATFORM_ID);
+
+cartItemsCount = signal<number>(0);
+
+ 
 
 
   addToCart(productId: string, quantity: number = 1): Observable<any> {
@@ -24,7 +29,7 @@ export class CartService {
     );
   }
 
-  getCart(): Observable<any> {
+  getCart(): Observable<ICart> {
 
     console.log(this.baseUrl)
     let token = '';
@@ -33,7 +38,7 @@ export class CartService {
     if (isPlatformBrowser(this.platformId)) {
       token = localStorage.getItem('token') || '';
     }
-    return this.httpClient.get(this.baseUrl, { headers: { Authorization: `Bearer ${token}` } });
+    return this.httpClient.get<ICart>(this.baseUrl, { headers: { Authorization: `Bearer ${token}` } });
   }
 
   updateCart(productId: string, quantity: number): Observable<any> {
@@ -43,4 +48,16 @@ export class CartService {
   deleteFromCart(productId: string): Observable<any> {
     return this.httpClient.delete(`${this.baseUrl}/${productId}`);
   }
+  
+  loadCartCount(): void {
+  this.getCart().subscribe({
+    next: (response) => {
+      const totalCount = response.items.reduce((total, item) => total + item.quantity, 0);
+      this.cartItemsCount.set(totalCount);
+    },
+    error: () => {
+      this.cartItemsCount.set(0);
+    }
+  });
+}
 }
