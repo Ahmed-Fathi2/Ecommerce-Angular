@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ErrorHandlerService } from '../../../../core/services/ErrorHandlerService/error-handler-service';
 import { LoginService } from '../../../../core/services/auth/login/login-service';
 import { isPlatformBrowser } from '@angular/common';
+import { CartService } from '../../../../core/services/cart/cart-service';
 
 @Component({
   selector: 'app-login',
@@ -12,68 +13,52 @@ import { isPlatformBrowser } from '@angular/common';
   styleUrl: './login.css',
 })
 export class Login {
-
   private platformId = inject(PLATFORM_ID);
-  isLoading = signal<boolean>(false)
-  serverErrorMessages = signal<string[]>([])
+  isLoading = signal<boolean>(false);
+  serverErrorMessages = signal<string[]>([]);
 
   constructor(
     private loginService: LoginService,
     private errorHandlerService: ErrorHandlerService,
-    private router: Router
-  ) { }
+    private router: Router,
+    private cartService: CartService,
+  ) {}
 
   loginForm: FormGroup = new FormGroup({
-
     Email: new FormControl(null, [Validators.required, Validators.email]),
 
-    Password: new FormControl(null, [Validators.required])
-
+    Password: new FormControl(null, [Validators.required]),
   });
 
   onSubmit() {
-
-
-      this.serverErrorMessages.set([]); 
+    this.serverErrorMessages.set([]);
 
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
-    }
-    else {
-
+    } else {
       this.isLoading.set(true);
 
-
       this.loginService.login(this.loginForm.value).subscribe({
-
         next: (data) => {
-
-          console.log(data)
+          console.log(data);
           this.isLoading.set(false);
 
           if (isPlatformBrowser(this.platformId)) {
-
-            localStorage.setItem('token', data.token);      // store the token in local storage
+            localStorage.setItem('token', data.token); 
           }
 
+          this.loginService.getUserData();
 
-          this.loginService.getUserData(); // Call getUserData to decode and store user data in the signal
-
-          this.router.navigate(['/home']);                // navigate to home page after successful login
-
+          this.cartService.loadCartCount();
+          
+          this.router.navigate(['/home']); 
         },
         error: (err) => {
-          console.log(err)
+          console.log(err);
           this.isLoading.set(false);
-          this.serverErrorMessages.set(this.errorHandlerService.extractServerErrors(err))
-        }
-      })
-
-
-
+          this.serverErrorMessages.set(this.errorHandlerService.extractServerErrors(err));
+        },
+      });
     }
   }
-
-
-
 }
