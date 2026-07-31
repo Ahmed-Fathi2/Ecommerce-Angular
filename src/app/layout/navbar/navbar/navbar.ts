@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, effect, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { LoginService } from '../../../core/services/auth/login/login-service';
 
@@ -8,27 +8,30 @@ import { LoginService } from '../../../core/services/auth/login/login-service';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-export class Navbar  {
+export class Navbar {
   isMobileMenuOpen = signal<boolean>(false);
 
-  // IsLoggedIn = computed(() => this.loginService.userData() !== null);
+  IsLoggedIn = computed(() => this.loginService.userData() !== null);
 
-  constructor(public loginService: LoginService, private router: Router) {}
+  constructor(
+    public loginService: LoginService,
+    private router: Router,
+  ) {
+    // effect(() => {
+    //   console.log('login signal ' + this.IsLoggedIn());
+    // });
+  }
 
   toggleMobileMenu(): void {
     this.isMobileMenuOpen.update((open) => !open);
   }
-logout(){
+  logout() {
+    localStorage.removeItem('token');
+    // this.loginService.userData.set(null);
+    this.loginService.getUserData();
 
-  localStorage.removeItem('token');
-  // this.loginService.userData.set(null);
-  this.loginService.getUserData();
-  
-  this.isMobileMenuOpen.set(false);
+    this.isMobileMenuOpen.set(false);
 
-  this.router.navigate(['/login']);
-
+    this.router.navigate(['/login']);
+  }
 }
-
-}
-
