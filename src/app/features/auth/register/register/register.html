@@ -6,13 +6,13 @@
     </div>
 
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-4">
-      @if (serverErrorMessages().length) {
+      <!-- @if (serverErrorMessages().length) {
       <div class="rounded-lg border border-red-200 bg-red-50 px-3 py-2">
         @for (message of serverErrorMessages(); track message) {
         <p class="text-sm text-red-600">{{ message }}</p>
         }
       </div>
-      }
+      } -->
 
       <div class="grid gap-4 sm:grid-cols-2">
         <div>
