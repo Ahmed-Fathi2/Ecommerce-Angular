@@ -13,6 +13,6 @@ export const routes: Routes = [
 {path:'login',component:Login},
 {path:'register',component:Register},
 {path:'details/:id' , component:Productdetails,canActivate:[authGuard]},
-{path:'cart' , component:Cart}
+{path:'cart' , component:Cart,canActivate:[authGuard]}
 
 ];
