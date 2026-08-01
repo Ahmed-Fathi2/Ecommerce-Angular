@@ -11,19 +11,22 @@ import { CartItem } from '../../shared/components/cart-item/cart-item';
   styleUrl: './cart.css',
 })
 export class Cart implements OnInit {
-  private cartService = inject(CartService);
+  cartService = inject(CartService);
   private errorHandlerService = inject(ErrorHandlerService);
 
-  items = signal<ICartItem[]>([]);
+  // items = signal<ICartItem[]>([]);
   isLoading = signal<boolean>(true);
   errorMessages = signal<string[]>([]);
-  
 
   ngOnInit(): void {
+    this.loadCart();
+  }
+
+  private loadCart() {
     this.cartService.getCart().subscribe({
       next: (response) => {
         this.isLoading.set(false);
-        this.items.set(response.items);
+        this.cartService.items.set(response.items);
       },
       error: (error) => {
         this.isLoading.set(false);
