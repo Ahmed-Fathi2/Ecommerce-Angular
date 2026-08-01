@@ -35,7 +35,7 @@ export class ProductSlider implements OnInit {
         this.isLoading.set(false);
       },
       error: (error) => {
-        console.error('Error fetching products:', error);
+        // console.error('Error fetching products:', error);
         this.isLoading.set(false);
         this.errorMessages.set(this.errorHandlerService.extractServerErrors(error));
       },
