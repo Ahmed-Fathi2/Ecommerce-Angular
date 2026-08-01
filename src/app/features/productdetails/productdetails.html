@@ -28,7 +28,7 @@
   }
 
   <!-- Error Alert -->
-  @else if (errorMessages().length > 0) {
+  @else if (isErrorExists()) {
     <div class="max-w-2xl mx-auto my-12 p-6 bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-800 rounded-2xl text-center space-y-4">
       <div class="w-12 h-12 rounded-full bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400 flex items-center justify-center mx-auto">
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -36,12 +36,8 @@
         </svg>
       </div>
       <h3 class="text-lg font-bold text-rose-800 dark:text-rose-300">Unable to load product details</h3>
-      <ul class="text-sm text-rose-600 dark:text-rose-400 space-y-1">
-        @for (msg of errorMessages(); track $index) {
-          <li>{{ msg }}</li>
-        }
-      </ul>
-      <a href="/products" class="inline-flex items-center px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-medium rounded-lg text-sm transition-colors">
+
+      <a routerLink="/home" class="inline-flex items-center px-4 py-2 bg-rose-600 hover:bg-rose-700 hover:cursor-pointer text-white font-medium rounded-lg text-sm transition-colors">
         Back to Products
       </a>
     </div>
