@@ -5,6 +5,7 @@ import { ErrorHandlerService } from '../../../../core/services/ErrorHandlerServi
 import { LoginService } from '../../../../core/services/auth/login/login-service';
 import { isPlatformBrowser } from '@angular/common';
 import { CartService } from '../../../../core/services/cart/cart-service';
+import { NotificationService } from '../../../../core/services/notification/notification-service';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,8 @@ export class Login {
   private platformId = inject(PLATFORM_ID);
   isLoading = signal<boolean>(false);
   serverErrorMessages = signal<string[]>([]);
+
+  private notificationService = inject(NotificationService);
 
   constructor(
     private loginService: LoginService,
@@ -44,19 +47,22 @@ export class Login {
           this.isLoading.set(false);
 
           if (isPlatformBrowser(this.platformId)) {
-            localStorage.setItem('token', data.token); 
+            localStorage.setItem('token', data.token);
           }
 
           this.loginService.getUserData();
 
           this.cartService.loadCartCount();
-          
-          this.router.navigate(['/home']); 
+
+          this.router.navigate(['/home']);
         },
         error: (err) => {
+              console.log('==============error resopnse==================');
           console.log(err);
           this.isLoading.set(false);
           this.serverErrorMessages.set(this.errorHandlerService.extractServerErrors(err));
+          console.log('================================');
+          console.log(this.serverErrorMessages().length);
         },
       });
     }
