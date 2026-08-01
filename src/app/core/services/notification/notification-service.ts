@@ -15,7 +15,7 @@ export class NotificationService {
     if(isPlatformBrowser(this.platformId)){
 
         this.notyf= new Notyf({
-            duration: 3000,
+            duration: 3500,
             position: {
                 x: 'right',
                 y: 'top',
