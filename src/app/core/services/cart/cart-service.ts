@@ -27,25 +27,13 @@ export class CartService {
   cartItemsCount = signal<number>(0);
 
   addToCart(productId: string, quantity: number = 1): Observable<any> {
-    const token = localStorage.getItem('token');
 
-    return this.httpClient.post(
-      this.baseUrl,
-      { productId, quantity },
-      { headers: { Authorization: `Bearer ${token}` } },
-    );
+    return this.httpClient.post(this.baseUrl,{ productId, quantity });
   }
 
   getCart(): Observable<ICart> {
-    console.log(this.baseUrl);
-    let token = '';
 
-    if (isPlatformBrowser(this.platformId)) {
-      token = localStorage.getItem('token') || '';
-    }
-    return this.httpClient.get<ICart>(this.baseUrl, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    return this.httpClient.get<ICart>(this.baseUrl);
   }
 
   updateCart(productId: string, quantity: number): Observable<any> {
@@ -53,10 +41,8 @@ export class CartService {
   }
 
   deleteFromCart(productId: string): Observable<any> {
-    const token = localStorage.getItem('token');
-    return this.httpClient.delete(`${this.baseUrl}/${productId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    return this.httpClient.delete(`${this.baseUrl}/${productId}`)
+    
   }
 
   loadCartCount(): void {
