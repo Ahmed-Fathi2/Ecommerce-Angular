@@ -8,14 +8,11 @@ import { headerInterceptor } from './core/interceptors/header/header-interceptor
 import { errorInterceptor } from './core/interceptors/error/error-interceptor';
 import { spinnerInterceptor } from './core/interceptors/spinner/spinner-interceptor';
 
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes, withComponentInputBinding()),
     provideClientHydration(),
-    provideHttpClient(withInterceptors([headerInterceptor,errorInterceptor,spinnerInterceptor])),
- 
-
+    provideHttpClient(withInterceptors([headerInterceptor, errorInterceptor, spinnerInterceptor])),
   ],
 };
