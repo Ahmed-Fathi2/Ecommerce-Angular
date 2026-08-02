@@ -41,8 +41,6 @@ export class ProductCard {
       },
       error: (error) => {
         console.log(error);
-        // scrollTo({ top: 0, behavior: 'smooth' });
-        this.notification.error('Something went wrong');
       },
     });
   }
